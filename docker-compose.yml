@@ -1,0 +1,25 @@
+version: "3.11"
+services:
+  db:
+    image: "postgres:latest"
+    container_name: db_app
+    ports:
+      - 5678:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: localhost
+
+
+  app:
+    build:
+      context: .
+    env_file:
+      - .env-non-dev
+    container_name: fastapi_test
+#    command: ["/fastapi_test/docker/app.sh"]
+    ports:
+      - 9999:8000
+    depends_on:
+      - db
